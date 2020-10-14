@@ -24,15 +24,14 @@ def convolve(f, g):
   return fg
 
 def print_array(a):
+  "prints signed single digit integers, best not give it anything else"
   a = a.copy()
   a[np.isclose(a, 0)] = 0 # suppress negative zeros
   def fmt(val):
-    if val > 0:
-      return f"{val: 1.0f}"
-    elif val < 0:
-      return f"{val: 1.0f}"
-    else:
+    if val == 0: # isclose took care of that
       return " _"
+    else:
+      return f"{val: 1.0f}" # space means - or blank sign
 
   for row in a:
     print(" ".join(fmt(el) for el in row))
@@ -71,7 +70,7 @@ print_array(f)
 g = np.float32([[-1,  0, +1]])
 # try [-1, 0, 0] to see how an "identity" (negated) looks like vs the other filters
 # it does appear as if each element of f scales a copy of g, then
-# all those scaled copies overlay on each other and sum "through"
+# all those scaled copies overlay on each other and sum "through" (superposition)
 
 # image:       _  _  1  1  _  _  _ :  first and second are zero, then two ones
 #             -------------------- : "instances" of [-1, 0, +1]
@@ -80,6 +79,7 @@ g = np.float32([[-1,  0, +1]])
 #                   -1  0 +1       : * 1
 #                      -1  0 +1    : * 1
 #                          0  0  0 : * 0
+#             -------------------- : summed/integrated
 # "sum":       0  0 -1 -1 +1 +1  0
 
 # try transposing to get the filter in y direction

@@ -74,6 +74,7 @@ g = np.float32([[-1,  0, +1]])
 # it does appear as if each element of f scales a copy of g, then
 # all those scaled copies overlay on each other and sum "through" (superposition)
 
+# sum of scaled copies:
 # image:       _  _  1  1  _  _  _ :  first and second are zero, then two ones
 #             -------------------- : "instances" of [-1, 0, +1]
 #              0  0  0             : * 0
@@ -82,7 +83,20 @@ g = np.float32([[-1,  0, +1]])
 #                      -1  0 +1    : * 1
 #                          0  0  0 : * 0
 #             -------------------- : summed/integrated
-# "sum":       0  0 -1 -1 +1 +1  0
+# sum:         0  0 -1 -1 +1 +1  0
+
+# equivalently the "moving window" idea:
+# image:       _  _  _  1  1  _  _  _
+#             ----------------------- : use [-1, 0, +1] reversed, then dot product
+#             +1  0 -1                : =>  0
+#                +1  0 -1             : => -1
+#                   +1  0 -1          : => -1
+#                      +1  0 -1       : => +1
+#                         +1  0 -1    : => +1
+#                            +1  0 -1 : =>  0
+#             -----------------------
+# result             0 -1 -1 +1 +1  0
+
 
 # try transposing to get the filter in y direction
 #g = g.T

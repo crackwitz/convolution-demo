@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 # example convolutions using discrete fourier transform
 # note padding and shift
 # note the cyclical nature (wrap-around)
